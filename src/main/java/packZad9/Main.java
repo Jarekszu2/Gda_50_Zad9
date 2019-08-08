@@ -1,4 +1,8 @@
 package packZad9;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /*
 Napisz aplikację do zamawiania biletu w kasie SKM. Użytkownik podchodzi do kasy (uruchamia się program) i program pyta go o:
 - imie
@@ -14,9 +18,10 @@ public class Main {
         System.out.println();
         Utilities utilities = new Utilities();
         ScannerWork scannerWork = new ScannerWork();
+        List<Integer> integerList = utilities.getIntegerList();
 
         System.out.println("Aplikacja służy do zakupu biletu w kasie SKM.");
-        System.out.println("Po podaniu danych Użytkownika drugowany jest jego bilet.");
+        System.out.println("Po podaniu danych Użytkownika drukowany jest jego bilet.");
 
         boolean flag = false;
         char znak = 'a';
@@ -31,26 +36,15 @@ public class Main {
                 System.out.println();
 
                 String name = utilities.getName();
-                System.out.println(name);
                 String surname = utilities.getSurame();
-                System.out.println(surname);
                 RodzajBiletu rodzajBiletu = utilities.getRodzajBiletu();
-                System.out.println(rodzajBiletu.name());
-                char payment = utilities.getPayment(rodzajBiletu);
-                switch (payment) {
-                    case 'a':
-                        System.out.println("Zapłacono kartą.");
-                        break;
-                    case 'b':
-                        System.out.println("Zapłacono gotówka.");
-                        break;
-                    case 'c':
-                        System.out.println("Odmówiono 'Zdrowaśkę', bilet opłacony.");
-                        break;
-                    case 'd':
-                        System.out.println("Zrezygnowano z zakupu biletu.");
-                        continue;
+                String payment = utilities.getPayment(rodzajBiletu);
+                if (payment.equalsIgnoreCase("quit")) {
+                    continue;
+                } else {
+                    utilities.printBilet(rodzajBiletu, name, surname, utilities.getBiletId(name, surname, integerList), payment);
                 }
+
             } else {
                 flag = true;
             }
